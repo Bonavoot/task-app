@@ -7,10 +7,19 @@ class App extends Component {
     super();
 
     this.state = {
-      task: { text: "", id: uniqid() },
+      task: { text: "", id: uniqid(), edit: false },
       tasks: [],
     };
   }
+
+  deleteBtn = (task) => {
+    let arr = this.state.tasks;
+    let pos = arr.indexOf(task);
+    arr.splice(pos, 1);
+    this.setState({
+      tasks: arr,
+    });
+  };
 
   handleChange = (e) => {
     this.setState({
@@ -39,13 +48,18 @@ class App extends Component {
             onChange={this.handleChange}
             value={task.text}
             type="text"
-            id="taskInput"
+            id="taskArray"
           />
           <button type="submit">Add Task</button>
         </form>
-        <Overview tasks={tasks} />
+        <Overview
+          tasks={tasks}
+          deleteBtn={this.deleteBtn}
+          edit={this.state.task.edit}
+        />
       </div>
     );
   }
 }
+
 export default App;
